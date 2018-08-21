@@ -17,6 +17,7 @@ int main(){
     #else
         cout << "Testing extended concurrent deque" << endl;
     #endif
+    cout << "Using " << kRepetitionsNum << " trials for each test" << endl;
 
     for(auto it: testCases){
         if(it == nullptr)

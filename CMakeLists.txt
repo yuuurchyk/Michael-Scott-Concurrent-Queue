@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 project(MPMCDequeExtended)
 set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g -DTESTEXTENDED")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DTESTEXTENDED")
 
 find_package(Threads REQUIRED)
 
@@ -15,6 +15,7 @@ set(FILESLST
 
 set(DIRSLST
     MPMCDeque
+    MPMCDequeExtended
     TestCase
     TimeMeasurement
 )

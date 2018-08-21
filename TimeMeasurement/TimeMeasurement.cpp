@@ -5,8 +5,6 @@
 #include <algorithm>
 
 double timeIt(TestCase &testCase){
-    constexpr static size_t kRepetitionsNum{10};
-
     long long bestTime = LLONG_MAX;
 
     for(size_t i = 0; i < kRepetitionsNum; ++i){
