@@ -46,7 +46,7 @@ public:
         testDeque<int> d;
         d.push_back(1);
         
-        if(d.pop_front() != 1)
+        if(d.pop_back() != 1)
             fail();
         
         d.push_front(2);
@@ -81,22 +81,22 @@ public:
         for(auto &it: threads)
             it.join();
         
-        // vector<size_t> obtainedValues;
-        // obtainedValues.reserve(kMaxN + 1);
+        vector<size_t> obtainedValues;
+        obtainedValues.reserve(kMaxN + 1);
 
-        // for(size_t i = 0; i <= kMaxN; ++i)
-        //     obtainedValues.push_back(d.pop_back());
+        for(size_t i = 0; i <= kMaxN; ++i)
+            obtainedValues.push_back(d.pop_back());
         
-        // sort(obtainedValues.begin(), obtainedValues.end());
+        sort(obtainedValues.begin(), obtainedValues.end());
 
-        // for(size_t i = 0; i <= kMaxN; ++i)
-        //     if(obtainedValues[i] != i)
-        //         fail();
+        for(size_t i = 0; i <= kMaxN; ++i)
+            if(obtainedValues[i] != i)
+                fail();
     }
 
     virtual ~MultithreadPush() = default;
 protected:
-    static constexpr size_t kMaxN = 10000000;
+    static constexpr size_t kMaxN = 100000;
 
     virtual void oddPusher(testDeque<size_t> &target) const = 0;
     virtual void evenPusher(testDeque<size_t> &target) const = 0;
