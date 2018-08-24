@@ -99,7 +99,7 @@ namespace{
 
                 // rule 2
                 if(first == kAddNumbersDeathPill)
-                    return;
+                    return target.push(first);
                 
                 // rule 3
                 target.push(first);
@@ -274,7 +274,7 @@ TYPED_TEST_P(ConcurrentQueueTest, AddNumbers){
     // We'll try to pop 3 elements from the queue
     // Possible situations:
     //  1) Nothing => we should wait
-    //  2) Death pill => consumer should die
+    //  2) Death pill => consumer should push it back and die
     //  3) Number => consumer should push it back
     //  4) Number and death pill => consumer should push number and death pill back and die
     //  5) 2 numbers => consumer should add them, push sum back
