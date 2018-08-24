@@ -14,9 +14,9 @@ public:
     std::recursive_mutex& getPopMutex() override { return mux_; }
     std::condition_variable_any& getCondVar() override { return condVar_; }
 
-    void lock() override { mux_.lock(); }
-    void unlock() override { mux_.unlock(); }
-    bool try_lock() override { return mux_.try_lock(); }
+    void lock() const override { mux_.lock(); }
+    void unlock() const override { mux_.unlock(); }
+    bool try_lock() const override { return mux_.try_lock(); }
 
     void push(const T &val) override {
         std::lock_guard<std::recursive_mutex> lck(mux_);

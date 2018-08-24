@@ -14,9 +14,9 @@ public:
     virtual std::recursive_mutex& getPopMutex() = 0;
     virtual std::condition_variable_any& getCondVar() = 0;
 
-    virtual void lock() = 0;
-    virtual void unlock() = 0;
-    virtual bool try_lock() = 0;
+    virtual void lock() const = 0;
+    virtual void unlock() const = 0;
+    virtual bool try_lock() const = 0;
 
     virtual void push(const T &val) = 0;
 

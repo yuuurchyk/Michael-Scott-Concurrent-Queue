@@ -9,6 +9,7 @@
 
 #include "ConcurrentQueueBase/ConcurrentQueueBase.hpp"
 #include "ConcurrentQueueSimple/ConcurrentQueueSimple.hpp"
+#include "ConcurrentQueueExtended/ConcurrentQueueExtended.hpp"
 
 typedef int T;
 
@@ -153,6 +154,9 @@ namespace{
 template class ConcurrentQueueSimple<int>;
 template class ConcurrentQueueSimple<std::vector<size_t>>;
 
+template class ConcurrentQueueExtended<int>;
+template class ConcurrentQueueExtended<std::vector<size_t>>;
+
 template <typename T>
 class ConcurrentQueueTest: public ::testing::Test { };
 TYPED_TEST_CASE_P(ConcurrentQueueTest);
@@ -183,7 +187,6 @@ TYPED_TEST_P(ConcurrentQueueTest, PushAndSizeAndEmptyOneThread){
 
     for(T i = 2; i <= 1000000; ++i){
         q.push(i);
-        ASSERT_FALSE(q.empty());
         ASSERT_EQ(q.size(), i);
     }
 }
@@ -345,7 +348,7 @@ REGISTER_TYPED_TEST_CASE_P(
     AddNumbers
 );
 
-typedef ::testing::Types<ConcurrentQueueSimple<T>> ConcurrentQueueTypes;
+typedef ::testing::Types<ConcurrentQueueSimple<T>, ConcurrentQueueExtended<T>> ConcurrentQueueTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(ConcurrentQueueInstantiation, ConcurrentQueueTest, ConcurrentQueueTypes);
 
 int main(int argc, char **argv){

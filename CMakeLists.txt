@@ -17,6 +17,7 @@ set(FILESLST
 set(DIRSLST
     ConcurrentQueueBase
     ConcurrentQueueSimple
+    ConcurrentQueueExtended
 )
 
 include_directories(${DIRSLST})
