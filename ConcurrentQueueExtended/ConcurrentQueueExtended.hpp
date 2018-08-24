@@ -46,27 +46,42 @@ public:
 
     T pop() override{
         T res;
-        while(!tryPop(&res)){}
-        return res;
+
+        std::unique_lock<std::recursive_mutex> lck(head);
+
+        while(true){
+            if(tryPop(&res))
+                return res;
+            condVar.wait(lck);
+        }
     }
     bool tryPop(T *target=nullptr) override{
         std::lock_guard<std::recursive_mutex> lck(head);
 
         if(leftMostBlock->leftElement == leftMostBlock->data + leftMostBlock->kBlockSize - 1){
-            if(leftMostBlock->rightBlock == nullptr)
-                return false;
+            {
+                std::lock_guard<std::recursive_mutex> lck1(tail);
+                if(leftMostBlock->rightBlock == nullptr)
+                    return false;
+            }
             
             Block *oldBlock = leftMostBlock;
             leftMostBlock = leftMostBlock->rightBlock;
             delete oldBlock;
             *target = *(leftMostBlock->leftElement);
+            condVar.notify_one();
             return true;
         }
         else{
-            if(leftMostBlock->leftElement == leftMostBlock->rightElement)
-                return false;
+            {
+                std::lock_guard<std::recursive_mutex> lck1(tail);
+                if(leftMostBlock->leftElement == leftMostBlock->rightElement)
+                    return false;
+            }
+            
             *target = *(leftMostBlock->leftElement + 1);
             (leftMostBlock->leftElement++)->~T();
+            condVar.notify_one();
             return true;
         }
 
