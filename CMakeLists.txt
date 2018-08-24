@@ -7,20 +7,19 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DTESTEXTENDED")
 
 find_package(Threads REQUIRED)
 
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
 set(FILESLST
-    TestCase/TestCase.cpp
-    TimeMeasurement/TimeMeasurement.cpp
-    main.cpp
+    tests.cpp
 )
 
 set(DIRSLST
-    MPMCDeque
-    MPMCDequeExtended
-    TestCase
-    TimeMeasurement
+    ConcurrentQueueBase
+    ConcurrentQueueSimple
 )
 
 include_directories(${DIRSLST})
 
-add_executable(main ${FILESLST})
-target_link_libraries(main ${CMAKE_THREAD_LIBS_INIT})
+add_executable(tests ${FILESLST})
+target_link_libraries(tests ${CMAKE_THREAD_LIBS_INIT} ${GTEST_LIBRARIES} pthread)
