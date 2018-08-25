@@ -65,6 +65,9 @@ public:
             //         return false;
             // }
             
+            if(leftMostBlock->rightBlock == nullptr)
+                return false;
+
             Block *oldBlock = leftMostBlock;
             leftMostBlock = leftMostBlock->rightBlock;
             delete oldBlock;
@@ -79,6 +82,9 @@ public:
             //         return false;
             // }
             
+            if(leftMostBlock->leftElement == leftMostBlock->rightElement)
+                return false;
+
             *target = *(leftMostBlock->leftElement + 1);
             (leftMostBlock->leftElement++)->~T();
             condVar.notify_one();
