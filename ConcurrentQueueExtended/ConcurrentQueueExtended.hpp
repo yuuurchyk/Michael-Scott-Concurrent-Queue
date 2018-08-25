@@ -59,11 +59,11 @@ public:
         std::lock_guard<std::recursive_mutex> lck(head);
 
         if(leftMostBlock->leftElement == leftMostBlock->data + leftMostBlock->kBlockSize - 1){
-            {
-                std::lock_guard<std::recursive_mutex> lck1(tail);
-                if(leftMostBlock->rightBlock == nullptr)
-                    return false;
-            }
+            // {
+            //     std::lock_guard<std::recursive_mutex> lck1(tail);
+            //     if(leftMostBlock->rightBlock == nullptr)
+            //         return false;
+            // }
             
             Block *oldBlock = leftMostBlock;
             leftMostBlock = leftMostBlock->rightBlock;
@@ -73,11 +73,11 @@ public:
             return true;
         }
         else{
-            {
-                std::lock_guard<std::recursive_mutex> lck1(tail);
-                if(leftMostBlock->leftElement == leftMostBlock->rightElement)
-                    return false;
-            }
+            // {
+            //     std::lock_guard<std::recursive_mutex> lck1(tail);
+            //     if(leftMostBlock->leftElement == leftMostBlock->rightElement)
+            //         return false;
+            // }
             
             *target = *(leftMostBlock->leftElement + 1);
             (leftMostBlock->leftElement++)->~T();
