@@ -15,7 +15,7 @@
 typedef int T;
 
 namespace{
-    constexpr size_t kIncreaseToThousandN = 1000;
+    constexpr size_t kIncreaseToThousandN = 100;
 
     std::vector<T> increaseToThousandInit(){
         static constexpr size_t kMaxInitial = 10;

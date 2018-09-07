@@ -1,0 +1,224 @@
+george@george-PC:~/Documents/cpp_CourseProject/Debug$ valgrind --tool=helgrind ./tests
+==16739== Helgrind, a thread error detector
+==16739== Copyright (C) 2007-2015, and GNU GPL'd, by OpenWorks LLP et al.
+==16739== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==16739== Command: ./tests
+==16739== 
+[==========] Running 6 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 6 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0, where TypeParam = ConcurrentQueueExtended<int>
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init (27 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Description
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Description (2 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.PushAndSizeAndEmptyOneThread
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.PushAndSizeAndEmptyOneThread (2489 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.PopAndTryPopOneThread
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.PopAndTryPopOneThread (15 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.IncreaseToThousand
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.IncreaseToThousand (30419 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.AddNumbers
+==16739== ---Thread-Announcement------------------------------------------
+==16739== 
+==16739== Thread #8 was created
+==16739==    at 0x56FC3DE: clone (clone.S:74)
+==16739==    by 0x4E46149: create_thread (createthread.c:102)
+==16739==    by 0x4E47E83: pthread_create@@GLIBC_2.2.5 (pthread_create.c:679)
+==16739==    by 0x4C34BB7: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x5115DC2: std::thread::_M_start_thread(std::shared_ptr<std::thread::_Impl_base>, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x414BCF: std::thread::thread<void (&)(ConcurrentQueueBase<int>&), std::reference_wrapper<ConcurrentQueueExtended<int> > >(void (&)(ConcurrentQueueBase<int>&), std::reference_wrapper<ConcurrentQueueExtended<int> >&&) (thread:137)
+==16739==    by 0x411E87: gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:300)
+==16739==    by 0x44007F: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43ADD4: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x41FFFB: testing::Test::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x4208A3: testing::TestInfo::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x420F92: testing::TestCase::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739== 
+==16739== ---Thread-Announcement------------------------------------------
+==16739== 
+==16739== Thread #6 was created
+==16739==    at 0x56FC3DE: clone (clone.S:74)
+==16739==    by 0x4E46149: create_thread (createthread.c:102)
+==16739==    by 0x4E47E83: pthread_create@@GLIBC_2.2.5 (pthread_create.c:679)
+==16739==    by 0x4C34BB7: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x5115DC2: std::thread::_M_start_thread(std::shared_ptr<std::thread::_Impl_base>, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x414A3F: std::thread::thread<void (&)(unsigned long, unsigned long, ConcurrentQueueBase<int>&), unsigned long&, unsigned long&, std::reference_wrapper<ConcurrentQueueExtended<int> > >(void (&)(unsigned long, unsigned long, ConcurrentQueueBase<int>&), unsigned long&, unsigned long&, std::reference_wrapper<ConcurrentQueueExtended<int> >&&) (thread:137)
+==16739==    by 0x411DFC: gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:290)
+==16739==    by 0x44007F: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43ADD4: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x41FFFB: testing::Test::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x4208A3: testing::TestInfo::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x420F92: testing::TestCase::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739== 
+==16739== ---Thread-Announcement------------------------------------------
+==16739== 
+==16739== Thread #1 is the program's root thread
+==16739== 
+==16739== ----------------------------------------------------------------
+==16739== 
+==16739==  Lock at 0xFFEFFF510 was first observed
+==16739==    at 0x4C321BC: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x405936: __gthread_mutex_lock(pthread_mutex_t*) (gthr-default.h:748)
+==16739==    by 0x4059B5: __gthread_recursive_mutex_lock(pthread_mutex_t*) (gthr-default.h:810)
+==16739==    by 0x40662B: std::recursive_mutex::lock() (mutex:176)
+==16739==    by 0x40920E: std::unique_lock<std::recursive_mutex>::lock() (mutex:485)
+==16739==    by 0x409147: std::unique_lock<std::recursive_mutex>::unique_lock(std::recursive_mutex&) (mutex:415)
+==16739==    by 0x40A218: _ZSt4lockISt15recursive_mutexS0_IEEvRT_RT0_DpRT1_ (mutex:664)
+==16739==    by 0x40785A: ConcurrentQueueExtended<int>::lock() const (ConcurrentQueueExtended.hpp:27)
+==16739==    by 0x40BEE2: std::unique_lock<ConcurrentQueueExtended<int> const>::lock() (mutex:485)
+==16739==    by 0x40A3A7: std::unique_lock<ConcurrentQueueExtended<int> const>::unique_lock(ConcurrentQueueExtended<int> const&) (mutex:415)
+==16739==    by 0x4078EC: ConcurrentQueueExtended<int>::size() const (ConcurrentQueueExtended.hpp:35)
+==16739==    by 0x407941: ConcurrentQueueExtended<int>::empty() const (ConcurrentQueueExtended.hpp:38)
+==16739==  Address 0xffefff510 is on thread #1's stack
+==16739==  in frame #4, created by gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:254)
+==16739== 
+==16739==  Lock at 0xFFEFFF538 was first observed
+==16739==    at 0x4C3239C: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x405965: __gthread_mutex_trylock(pthread_mutex_t*) (gthr-default.h:757)
+==16739==    by 0x4059CF: __gthread_recursive_mutex_trylock(pthread_mutex_t*) (gthr-default.h:816)
+==16739==    by 0x406659: std::recursive_mutex::try_lock() (mutex:187)
+==16739==    by 0x40E576: std::unique_lock<std::recursive_mutex>::unique_lock(std::recursive_mutex&, std::try_to_lock_t) (mutex:424)
+==16739==    by 0x40D60E: std::unique_lock<std::recursive_mutex> std::__try_to_lock<std::recursive_mutex>(std::recursive_mutex&) (mutex:587)
+==16739==    by 0x40BC51: void std::__try_lock_impl<0, false>::__do_try_lock<std::recursive_mutex>(std::tuple<std::recursive_mutex&>&, int&) (mutex:617)
+==16739==    by 0x40A23E: _ZSt4lockISt15recursive_mutexS0_IEEvRT_RT0_DpRT1_ (mutex:667)
+==16739==    by 0x40785A: ConcurrentQueueExtended<int>::lock() const (ConcurrentQueueExtended.hpp:27)
+==16739==    by 0x40BEE2: std::unique_lock<ConcurrentQueueExtended<int> const>::lock() (mutex:485)
+==16739==    by 0x40A3A7: std::unique_lock<ConcurrentQueueExtended<int> const>::unique_lock(ConcurrentQueueExtended<int> const&) (mutex:415)
+==16739==    by 0x4078EC: ConcurrentQueueExtended<int>::size() const (ConcurrentQueueExtended.hpp:35)
+==16739==  Address 0xffefff538 is on thread #1's stack
+==16739==  in frame #4, created by gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:254)
+==16739== 
+==16739== Possible data race during read of size 4 at 0x5CDC124 by thread #8
+==16739== Locks held: 1, at address 0xFFEFFF510
+==16739==    at 0x407C82: ConcurrentQueueExtended<int>::tryPop(int*) (ConcurrentQueueExtended.hpp:74)
+==16739==    by 0x405EA7: (anonymous namespace)::addNumbersConsumer(ConcurrentQueueBase<int>&) (tests.cpp:92)
+==16739==    by 0x419C6C: void std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)>::_M_invoke<0ul>(std::_Index_tuple<0ul>) (functional:1531)
+==16739==    by 0x4199B5: std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)>::operator()() (functional:1520)
+==16739==    by 0x41985F: std::thread::_Impl<std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)> >::_M_run() (thread:115)
+==16739==    by 0x5115C7F: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x4E476B9: start_thread (pthread_create.c:333)
+==16739==    by 0x56FC41C: clone (clone.S:109)
+==16739== 
+==16739== This conflicts with a previous write of size 4 by thread #6
+==16739== Locks held: 1, at address 0xFFEFFF538
+==16739==    at 0x407A4D: ConcurrentQueueExtended<int>::push(int const&) (ConcurrentQueueExtended.hpp:48)
+==16739==    by 0x405E1D: (anonymous namespace)::addNumbersProducer(unsigned long, unsigned long, ConcurrentQueueBase<int>&) (tests.cpp:84)
+==16739==    by 0x419DC3: void std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)>::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (functional:1531)
+==16739==    by 0x4199FB: std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)>::operator()() (functional:1520)
+==16739==    by 0x41987F: std::thread::_Impl<std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)> >::_M_run() (thread:115)
+==16739==    by 0x5115C7F: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x4E476B9: start_thread (pthread_create.c:333)
+==16739==  Address 0x5cdc124 is 4 bytes inside a block of size 40,000 alloc'd
+==16739==    at 0x4C2F50F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x407E84: ConcurrentQueueExtended<int>::Block::Block(int const&) (ConcurrentQueueExtended.hpp:115)
+==16739==    by 0x407707: ConcurrentQueueExtended<int>::ConcurrentQueueExtended() (ConcurrentQueueExtended.hpp:19)
+==16739==    by 0x411D7A: gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:283)
+==16739==    by 0x44007F: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43ADD4: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x41FFFB: testing::Test::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x4208A3: testing::TestInfo::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x420F92: testing::TestCase::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x42806F: testing::internal::UnitTestImpl::RunAllTests() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x441574: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43BBDA: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==  Block was alloc'd by thread #1
+==16739== 
+==16739== ---Thread-Announcement------------------------------------------
+==16739== 
+==16739== Thread #7 was created
+==16739==    at 0x56FC3DE: clone (clone.S:74)
+==16739==    by 0x4E46149: create_thread (createthread.c:102)
+==16739==    by 0x4E47E83: pthread_create@@GLIBC_2.2.5 (pthread_create.c:679)
+==16739==    by 0x4C34BB7: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x5115DC2: std::thread::_M_start_thread(std::shared_ptr<std::thread::_Impl_base>, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x414A3F: std::thread::thread<void (&)(unsigned long, unsigned long, ConcurrentQueueBase<int>&), unsigned long&, unsigned long&, std::reference_wrapper<ConcurrentQueueExtended<int> > >(void (&)(unsigned long, unsigned long, ConcurrentQueueBase<int>&), unsigned long&, unsigned long&, std::reference_wrapper<ConcurrentQueueExtended<int> >&&) (thread:137)
+==16739==    by 0x411DFC: gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:290)
+==16739==    by 0x44007F: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43ADD4: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x41FFFB: testing::Test::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x4208A3: testing::TestInfo::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x420F92: testing::TestCase::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739== 
+==16739== ----------------------------------------------------------------
+==16739== 
+==16739==  Lock at 0xFFEFFF510 was first observed
+==16739==    at 0x4C321BC: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x405936: __gthread_mutex_lock(pthread_mutex_t*) (gthr-default.h:748)
+==16739==    by 0x4059B5: __gthread_recursive_mutex_lock(pthread_mutex_t*) (gthr-default.h:810)
+==16739==    by 0x40662B: std::recursive_mutex::lock() (mutex:176)
+==16739==    by 0x40920E: std::unique_lock<std::recursive_mutex>::lock() (mutex:485)
+==16739==    by 0x409147: std::unique_lock<std::recursive_mutex>::unique_lock(std::recursive_mutex&) (mutex:415)
+==16739==    by 0x40A218: _ZSt4lockISt15recursive_mutexS0_IEEvRT_RT0_DpRT1_ (mutex:664)
+==16739==    by 0x40785A: ConcurrentQueueExtended<int>::lock() const (ConcurrentQueueExtended.hpp:27)
+==16739==    by 0x40BEE2: std::unique_lock<ConcurrentQueueExtended<int> const>::lock() (mutex:485)
+==16739==    by 0x40A3A7: std::unique_lock<ConcurrentQueueExtended<int> const>::unique_lock(ConcurrentQueueExtended<int> const&) (mutex:415)
+==16739==    by 0x4078EC: ConcurrentQueueExtended<int>::size() const (ConcurrentQueueExtended.hpp:35)
+==16739==    by 0x407941: ConcurrentQueueExtended<int>::empty() const (ConcurrentQueueExtended.hpp:38)
+==16739==  Address 0xffefff510 is on thread #1's stack
+==16739==  in frame #8, created by gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:254)
+==16739== 
+==16739==  Lock at 0xFFEFFF538 was first observed
+==16739==    at 0x4C3239C: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x405965: __gthread_mutex_trylock(pthread_mutex_t*) (gthr-default.h:757)
+==16739==    by 0x4059CF: __gthread_recursive_mutex_trylock(pthread_mutex_t*) (gthr-default.h:816)
+==16739==    by 0x406659: std::recursive_mutex::try_lock() (mutex:187)
+==16739==    by 0x40E576: std::unique_lock<std::recursive_mutex>::unique_lock(std::recursive_mutex&, std::try_to_lock_t) (mutex:424)
+==16739==    by 0x40D60E: std::unique_lock<std::recursive_mutex> std::__try_to_lock<std::recursive_mutex>(std::recursive_mutex&) (mutex:587)
+==16739==    by 0x40BC51: void std::__try_lock_impl<0, false>::__do_try_lock<std::recursive_mutex>(std::tuple<std::recursive_mutex&>&, int&) (mutex:617)
+==16739==    by 0x40A23E: _ZSt4lockISt15recursive_mutexS0_IEEvRT_RT0_DpRT1_ (mutex:667)
+==16739==    by 0x40785A: ConcurrentQueueExtended<int>::lock() const (ConcurrentQueueExtended.hpp:27)
+==16739==    by 0x40BEE2: std::unique_lock<ConcurrentQueueExtended<int> const>::lock() (mutex:485)
+==16739==    by 0x40A3A7: std::unique_lock<ConcurrentQueueExtended<int> const>::unique_lock(ConcurrentQueueExtended<int> const&) (mutex:415)
+==16739==    by 0x4078EC: ConcurrentQueueExtended<int>::size() const (ConcurrentQueueExtended.hpp:35)
+==16739==  Address 0xffefff538 is on thread #1's stack
+==16739==  in frame #8, created by gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:254)
+==16739== 
+==16739== Possible data race during read of size 4 at 0x5CFF794 by thread #8
+==16739== Locks held: 1, at address 0xFFEFFF510
+==16739==    at 0x407C82: ConcurrentQueueExtended<int>::tryPop(int*) (ConcurrentQueueExtended.hpp:74)
+==16739==    by 0x405ED0: (anonymous namespace)::addNumbersConsumer(ConcurrentQueueBase<int>&) (tests.cpp:97)
+==16739==    by 0x419C6C: void std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)>::_M_invoke<0ul>(std::_Index_tuple<0ul>) (functional:1531)
+==16739==    by 0x4199B5: std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)>::operator()() (functional:1520)
+==16739==    by 0x41985F: std::thread::_Impl<std::_Bind_simple<void (*(std::reference_wrapper<ConcurrentQueueExtended<int> >))(ConcurrentQueueBase<int>&)> >::_M_run() (thread:115)
+==16739==    by 0x5115C7F: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x4E476B9: start_thread (pthread_create.c:333)
+==16739==    by 0x56FC41C: clone (clone.S:109)
+==16739== 
+==16739== This conflicts with a previous write of size 4 by thread #1
+==16739== Locks held: 1, at address 0xFFEFFF538
+==16739==    at 0x407A4D: ConcurrentQueueExtended<int>::push(int const&) (ConcurrentQueueExtended.hpp:48)
+==16739==    by 0x411F5A: gtest_case_ConcurrentQueueTest_::AddNumbers<ConcurrentQueueExtended<int> >::TestBody() (tests.cpp:310)
+==16739==    by 0x44007F: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x43ADD4: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x41FFFB: testing::Test::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x4208A3: testing::TestInfo::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x420F92: testing::TestCase::Run() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==    by 0x42806F: testing::internal::UnitTestImpl::RunAllTests() (in /home/george/Documents/cpp_CourseProject/Debug/tests)
+==16739==  Address 0x5cff794 is 21,924 bytes inside a block of size 40,000 alloc'd
+==16739==    at 0x4C2F50F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x407E84: ConcurrentQueueExtended<int>::Block::Block(int const&) (ConcurrentQueueExtended.hpp:115)
+==16739==    by 0x4079C2: ConcurrentQueueExtended<int>::push(int const&) (ConcurrentQueueExtended.hpp:43)
+==16739==    by 0x405E1D: (anonymous namespace)::addNumbersProducer(unsigned long, unsigned long, ConcurrentQueueBase<int>&) (tests.cpp:84)
+==16739==    by 0x419DC3: void std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)>::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (functional:1531)
+==16739==    by 0x4199FB: std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)>::operator()() (functional:1520)
+==16739==    by 0x41987F: std::thread::_Impl<std::_Bind_simple<void (*(unsigned long, unsigned long, std::reference_wrapper<ConcurrentQueueExtended<int> >))(unsigned long, unsigned long, ConcurrentQueueBase<int>&)> >::_M_run() (thread:115)
+==16739==    by 0x5115C7F: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==16739==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==16739==    by 0x4E476B9: start_thread (pthread_create.c:333)
+==16739==    by 0x56FC41C: clone (clone.S:109)
+==16739==  Block was alloc'd by thread #7
+==16739== 
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.AddNumbers (5743 ms)
+[----------] 6 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0 (38713 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test case ran. (38758 ms total)
+[  PASSED  ] 6 tests.
+==16739== 
+==16739== For counts of detected and suppressed errors, rerun with: -v
+==16739== Use --history-level=approx or =none to gain increased speed, at
+==16739== the cost of reduced accuracy of conflicting-access information
+==16739== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 1083126 from 30)
