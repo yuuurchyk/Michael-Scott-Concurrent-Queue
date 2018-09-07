@@ -1,25 +1,28 @@
 #ifndef CONCURRENT_QUEUE_EXTENDED_H_
 #define CONCURRENT_QUEUE_EXTENDED_H_
 
+#include <iostream>
 #include <new>
 #include <mutex>
-#include <condition_variable>
 #include <atomic>
+#include <condition_variable>
+#include <string>
+#include <exception>
 
 #include "../ConcurrentQueueBase/ConcurrentQueueBase.hpp"
 
-template <class T>
+template<class T>
 class ConcurrentQueueExtended final: public ConcurrentQueueBase<T>{
 public:
     ConcurrentQueueExtended():
-        leftMostBlock(new Block(T())),
-        rightMostBlock(leftMostBlock)
+        lB(new Block(T())),
+        rB(lB)
     {}
 
-    std::string description() const override{ return "ConcurrentQueueExtended"; }
+    std::string description() const override { return "ConcurrentQueueExtended"; }
 
     std::recursive_mutex& getPopMutex() override{ return head; }
-    std::condition_variable_any& getCondVar() override { return condVar; }
+    std::condition_variable_any& getCondVar() override{ return condVar; }
 
     void lock() const override{ std::lock(head, tail); }
     void unlock() const override {
@@ -28,20 +31,53 @@ public:
     };
     bool try_lock() const override{ return std::try_lock(head, tail) == -1; }
 
+    size_t size() const override{
+        std::unique_lock<const ConcurrentQueueExtended<T>> lck(*this);
+        return size_;
+    }
+    bool empty() const override{ return size() == 0; }
+
     void push(const T &val) override{
         std::lock_guard<std::recursive_mutex> lck(tail);
-
-        if(
-            rightMostBlock->rightElement + 1 < 
-            rightMostBlock->data + rightMostBlock->kBlockSize
-        )
-            new(++rightMostBlock->rightElement) T(val);
-        else{
-            rightMostBlock->rightBlock = new Block(val);
-            rightMostBlock = rightMostBlock->rightBlock;
+        if(rB->rI == rB->kSize - 1){
+            rB->rightSibling = new Block(val);
+            ++rB->isRightSibling;
+            rB = rB->rightSibling;
         }
-
+        else{
+            new(rB->data + rB->rI + 1) T(val);
+            ++rB->rI;
+        }
+        ++size_;
         condVar.notify_one();
+    }
+
+    bool tryPop(T *target=nullptr) override{
+        std::lock_guard<std::recursive_mutex> lck(head);
+        if(lB->lI == lB->kSize - 1){
+            if(!lB->isRightSibling)
+                return false;
+            auto old = lB;
+            lB = lB->rightSibling;
+            delete old;
+            if(target != nullptr)
+                *target = *lB->data;
+            --size_;
+            condVar.notify_one();
+            return true;
+        }
+        else{
+            if(lB->lI + 1 > lB->rI)
+                return false;
+            (lB->data + lB->lI)->~T();
+            if(target != nullptr)
+                *target = *(lB->data + lB->lI + 1);
+            ++lB->lI;
+            --size_;
+            condVar.notify_one();
+            return true;
+        }
+        return false;
     }
 
     T pop() override{
@@ -55,114 +91,45 @@ public:
             condVar.wait(lck);
         }
     }
-    bool tryPop(T *target=nullptr) override{
-        std::lock_guard<std::recursive_mutex> lck(head);
 
-        if(leftMostBlock->leftElement == leftMostBlock->data + leftMostBlock->kBlockSize - 1){
-            // {
-            //     std::lock_guard<std::recursive_mutex> lck1(tail);
-            //     if(leftMostBlock->rightBlock == nullptr)
-            //         return false;
-            // }
-            
-            if(leftMostBlock->rightBlock == nullptr)
-                return false;
-
-            Block *oldBlock = leftMostBlock;
-            leftMostBlock = leftMostBlock->rightBlock;
-            delete oldBlock;
-            *target = *(leftMostBlock->leftElement);
-            condVar.notify_one();
-            return true;
-        }
-        else{
-            // {
-            //     std::lock_guard<std::recursive_mutex> lck1(tail);
-            //     if(leftMostBlock->leftElement == leftMostBlock->rightElement)
-            //         return false;
-            // }
-            
-            if(leftMostBlock->leftElement == leftMostBlock->rightElement)
-                return false;
-
-            *target = *(leftMostBlock->leftElement + 1);
-            (leftMostBlock->leftElement++)->~T();
-            condVar.notify_one();
-            return true;
-        }
-
-        return false;
-    }
-
-    T& front() override{
-        std::lock_guard<ConcurrentQueueExtended<T>> lck(*this);
-
-        if(leftMostBlock->leftElement == leftMostBlock->data + leftMostBlock->kBlockSize - 1)
-            return *(leftMostBlock->rightBlock->leftElement);
-        else
-            return *(leftMostBlock->leftElement + 1);
-    }
-    const T& front() const override{
-        return front();
-    }
-
-    bool empty() const override{
-        return size() == 0;
-    }
-    size_t size() const override{
-        std::lock_guard<const ConcurrentQueueExtended<T>> lck(*this);
-
-        if(leftMostBlock == rightMostBlock)
-            return (leftMostBlock->rightElement - rightMostBlock->leftElement + 1) - 1;
-        
-        size_t res = (rightMostBlock->id - leftMostBlock->id + 1 - 2) * leftMostBlock->kBlockSize;
-        res += (leftMostBlock->data + leftMostBlock->kBlockSize - 1 - leftMostBlock->leftElement + 1);
-        res += (rightMostBlock->rightElement - rightMostBlock->data + 1);
-
-        return res - 1;
-    }
-
-    ~ConcurrentQueueExtended(){
-        while(leftMostBlock != nullptr){
-            auto oldBlock = leftMostBlock;
-            leftMostBlock = leftMostBlock->rightBlock;
-            delete oldBlock;
+    virtual ~ConcurrentQueueExtended(){
+        while(lB != nullptr){
+            auto old = lB;
+            lB = lB->rightSibling;
+            delete old;
         }
     }
+
 private:
-    static size_t blockIdCounter;
-
     class Block{
     public:
-        static constexpr size_t kBlockSize{10000};
+        static constexpr size_t kSize{10000};
 
-        size_t id;
-        T *data{nullptr};
-        T *leftElement{nullptr}, *rightElement{nullptr};
-        Block *rightBlock{nullptr};
+        T* data{nullptr};
+        std::atomic<size_t> lI{0}, rI{0};
 
-        Block(const T &val):
-            id(++blockIdCounter),
-            data(static_cast<T*>(::operator new(sizeof(T) * kBlockSize))),
-            leftElement(data),
-            rightElement(data)
-        {
-            new(leftElement) T(val);
-        }
+        std::atomic<char> isRightSibling{false};
+        Block *rightSibling{nullptr};
         
+        Block(const T &val):
+            data(static_cast<T*>(::operator new(sizeof(T) * kSize)))
+        {
+            new(data) T(val);
+        }
+
         ~Block(){
-            while(leftElement <= rightElement)
-                (leftElement++)->~T();
+            while(lI <= rI)
+                (data + (lI++))->~T();
             ::operator delete(data);
         }
     };
 
-    mutable std::recursive_mutex head{}, tail{};
-    std::condition_variable_any condVar;
-    Block *leftMostBlock{nullptr}, *rightMostBlock{nullptr};
-};
+    std::atomic<size_t> size_{0};
 
-template<class T>
-size_t ConcurrentQueueExtended<T>::blockIdCounter{0};
+    mutable std::recursive_mutex head{}, tail{};
+    std::condition_variable_any condVar{};
+    
+    Block *lB{nullptr}, *rB{nullptr};
+};
 
 #endif

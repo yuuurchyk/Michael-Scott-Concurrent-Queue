@@ -53,12 +53,6 @@ public:
         return true;
     }
 
-    T& front() override{
-        std::lock_guard<std::recursive_mutex> lck(mux_);
-        return q_.front();
-    }
-    const T& front() const override{ return front(); }
-
     bool empty() const override{
         std::lock_guard<std::recursive_mutex> lck(mux_);
         return q_.empty();
