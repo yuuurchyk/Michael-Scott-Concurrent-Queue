@@ -93,14 +93,14 @@ Consumers and producers work in paralel, so -1 is considered as a death pill.
 Because we are using queue, not deque, I suggest the following algorithm for consumers.
 We'll try to pop 3 elements from the queue.</p>
 <p>Possible situations:</p>
-                <ol>
-                    <li><p>Nothing => we should wait</p></li>
-                    <li><p>Death pill => consumer should push it back and die</p></li>
-                    <li><p>Number => consumer should push it back</p></li>
-                    <li><p>Number and death pill => consumer should push number and death pill back and die</p></li>
-                    <li><p>2 numbers => consumer should add them, push sum back</p></li>
-                    <li><p>3 numbers => same as in 5)</p></li>
-                    <li><p>2 Numbers and death pill => add numbers, push sum back, push death pill back</p></li>
+                <ol type="1">
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing => we should wait</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Death pill => consumer should push it back and die</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number => consumer should push it back</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number and death pill => consumer should push number and death pill back and die</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 numbers => consumer should add them, push sum back</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 numbers => same as in 5)</p></li>
+                    <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 Numbers and death pill => add numbers, push sum back, push death pill back</p></li>
                 </ol>
 <p>We will be using half of available threads as producers and other half as consumers.</p>
             </dd>
