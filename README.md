@@ -39,21 +39,24 @@ In order to build the project and run tests you should have <a href="https://cma
 <h2>How to build/run?</h2>
 
 <p>Make Debug or Release directory</p>
-<div class="codeCell">
-    <p>mkdir Debug</p>
-    <p>cd Debug</p>
-</div>
+
+```
+mkdir Debug
+cd Debug
+```
 
 <p>Let cmake generate make file and run it</p>
-<div class="codeCell">
-    <p>cmake -DCMAKE_BUILD_TYPE=Debug ..</p>
-    <p>make</p>
-</div>
+
+```
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+make
+```
 
 <p>Run some of the tests</p>
-<div class="codeCell">
-    <p>./tests</p>
-</div>
+
+```
+./tests
+```
 
 <h2>What tests are available?</h2>
 <ul>
