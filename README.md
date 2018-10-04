@@ -33,7 +33,7 @@
 
 <h2>Prerequisites</h2>
 <p>
-In order to build the project and run tests you should have <a href="https://cmake.org/">cmake</a> and <a href="https://github.com/google/googletest">gtest</a> installed.
+In order to build the project and run tests you should have c++ compiler, python interpreter, <a href="https://cmake.org/">cmake</a> and <a href="https://github.com/google/googletest">gtest</a> installed on your system.
 </p>
 
 <h2>How to build/run?</h2>
@@ -169,7 +169,7 @@ Testing:
 
 <h2>Problems</h2>
 <p>
-Although <a href="http://valgrind.org/">valgrind</a> detects possible data race (which can bee seen <a href="cpp_CourseProject/valgrindLogDebug.txt">here</a>), I was unable to reproduce it. Hence, I created a simple <a href="cpp_CourseProject/testErrors.py">python script</a> that can help. It simply runs specified test program infinite number of times.
+Although <a href="http://valgrind.org/">valgrind</a> detects possible data race (which can bee seen <a href="valgrindLogDebug.txt">here</a>), I was unable to reproduce it. Hence, I created a simple <a href="testErrors.py">python script</a> that can help. It simply runs specified test program infinite number of times.
 </p>
 <p>Command line arguments:</p>
 <ul>
