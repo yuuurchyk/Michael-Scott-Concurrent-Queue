@@ -2,12 +2,12 @@
 
 <h2>What is this?</h2>
 <p>
-    During this project I implemented a concurrent queue, which can be simultaneously accessed from both sides. I.e you can do <em>push</em> and <em>pop at the same time</em> and there are not lock with the same mutex.
+    During this project I implemented a concurrent queue, which can be simultaneously accessed from both sides. I.e you can do <b>push</b> and <b>pop at the same time</b> and there are not lock with the same mutex.
 </p>
 
 <h2>References</h2>
 <p>
-    I implemented <em>Michael-Scott Algorithm</em>, which can be found <a href="http://www.cs.rochester.edu/~scott/papers/1996_PODC_queues.pdf">here</a>. The main challenge was <em>memory management</em>, which was not described in the article.
+    I implemented <b>Michael-Scott Algorithm</b>, which can be found <a href="http://www.cs.rochester.edu/~scott/papers/1996_PODC_queues.pdf">here</a>. The main challenge was <b>memory management</b>, which was not described in the article.
 </p>
 
 <h2>Interface and implementations</h2>
@@ -62,7 +62,7 @@ make
 <ul>
     <li>
         <p>
-            <em>tests</em> - includes simple tests with integer queue, such as:
+            <b>tests</b> - includes simple tests with integer queue, such as:
         </p>
         <ul>
             <li><p>initialization</p></li>
@@ -73,7 +73,7 @@ make
         </ul>
         <p>the last 2 tests are the most important:</p>
         <dl>
-            <dt><em>IncreaseToThousand</em></dt>
+            <dt><b>IncreaseToThousand</b></dt>
             <dd>
 <p>There are numbers in increaseToThousandInitial withing small range ([0; 10]). We push them in the queue and perform the following operations in multiple threads:</p>
                 <ul>
@@ -83,9 +83,9 @@ make
                 </ul>
 <p>We are using std::thread::hardware_concurrency() number of threads</p>
             </dd>
-            <dt><em>AddNumbers</em></dt>
+            <dt><b>AddNumbers</b></dt>
             <dd>
-<p>Implementing <em>MPMC</em> pattern to compare implementations of concurrent queue.</p>
+<p>Implementing <b>MPMC</b> pattern to compare implementations of concurrent queue.</p>
 <p>There are producers: they push positive numbers in the queue.
 There are consumers: they pop 2 elements from the queue and push their sum back.
 The goal of the following process is to compute sum of all the numbers produced.
@@ -93,7 +93,7 @@ Consumers and producers work in paralel, so -1 is considered as a death pill.
 Because we are using queue, not deque, I suggest the following algorithm for consumers.
 We'll try to pop 3 elements from the queue.</p>
 <p>Possible situations:</p>
-                <ol type="1">
+                <ul>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing => we should wait</p></li>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Death pill => consumer should push it back and die</p></li>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number => consumer should push it back</p></li>
@@ -101,19 +101,19 @@ We'll try to pop 3 elements from the queue.</p>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 numbers => consumer should add them, push sum back</p></li>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 numbers => same as in 5)</p></li>
                     <li><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 Numbers and death pill => add numbers, push sum back, push death pill back</p></li>
-                </ol>
+                </ul>
 <p>We will be using half of available threads as producers and other half as consumers.</p>
             </dd>
         </dl>
-    <p>You can run <em>tests</em> with 2 command line arguments:</p>
+    <p>You can run <b>tests</b> with 2 command line arguments:</p>
         <ul>
-            <li><p>Number of samples in <em>IncreaseToThousand</em> (default: 100)</p></li>
-            <li><p>Number of samples in <em>AddNumbers</em> (default: 100)</p></li>
+            <li><p>Number of samples in <b>IncreaseToThousand</b> (default: 100)</p></li>
+            <li><p>Number of samples in <b>AddNumbers</b> (default: 100)</p></li>
         </ul>
     </li>
     <br/>
     <li>
-        <p><em>stringTests</em> - includes similar tests with string queue, such as:</p>
+        <p><b>stringTests</b> - includes similar tests with string queue, such as:</p>
         <ul>
             <li><p>initialization</p></li>
             <li><p>sequential push</p></li>
@@ -122,12 +122,12 @@ We'll try to pop 3 elements from the queue.</p>
         </ul>
         <p>The last test is the most important:</p>
         <dl>
-            <dt><em>ConcatenationMPMC</em></dt>
-            <dd><p>The idea is pretty much the same as in <em>AddNumbers</em>, but now we are operating with strings</p></dd>
+            <dt><b>ConcatenationMPMC</b></dt>
+            <dd><p>The idea is pretty much the same as in <b>AddNumbers</b>, but now we are operating with strings</p></dd>
         </dl>
-        <p>You can run <em>stringTests</em> with 1 command line argument:</p>
+        <p>You can run <b>stringTests</b> with 1 command line argument:</p>
         <ul>
-            <li><p>Number of samples in <em>ConcatenationMPMC</em> (default: 100)</p></li>
+            <li><p>Number of samples in <b>ConcatenationMPMC</b> (default: 100)</p></li>
         </ul>
     </li>
 </ul>
