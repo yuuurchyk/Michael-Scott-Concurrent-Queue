@@ -17,9 +17,6 @@
     ol li{
         padding-left: 15px;
     }
-    .withoutDots{
-        list-style-type: none;
-    }
     #interface, #implementations, a, .path{
         color: #2980b9;
     }
@@ -49,7 +46,7 @@
 
 <h2>Interface and implementations</h2>
 <p>Interface consist of several methods:</p>
-<ul class="withoutDots" id="interface">
+<ul style="list-style-type: none; color: #2980b9;">
     <li>getPopMutex</li>
     <li>lock</li>
     <li>unlock</li>
@@ -60,7 +57,7 @@
     <li>size</li>
 </ul>
 <p>And implementations:</p>
-<ul class="withoutDots" id="implementations">
+<ul id="implementations" style="list-style-type: none;">
     <li>ConcurrentQueueSimple&lt;T&gt; (push and pop share the same mutex)</li>
     <li>ConcurrentQueueExtended&lt;T&gt; (What this project is all about)</li>
 </ul>
@@ -76,21 +73,21 @@ In order to build the project and run tests you should have <a href="https://cma
 <h2>How to build/run?</h2>
 
 <p>Make Debug or Release directory</p>
-<section class="codeCell">
+<div class="codeCell">
     <p>mkdir Debug</p>
     <p>cd Debug</p>
-</section>
+</div>
 
 <p>Let cmake generate make file and run it</p>
-<section class="codeCell">
+<div class="codeCell">
     <p>cmake -DCMAKE_BUILD_TYPE=Debug ..</p>
     <p>make</p>
-</section>
+</div>
 
 <p>Run some of the tests</p>
-<section class="codeCell">
+<div class="codeCell">
     <p>./tests</p>
-</section>
+</div>
 
 <h2>What tests are available?</h2>
 <ul>
@@ -167,7 +164,7 @@ We'll try to pop 3 elements from the queue.</p>
 </ul>
 
 <h2>Examples run</h2>
-<section class="codeCell">
+<div class="codeCell">
     <p>
         <em>
             <span class="pcName">
@@ -287,7 +284,7 @@ We'll try to pop 3 elements from the queue.</p>
         <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PASSED&nbsp;&nbsp;&nbsp;&nbsp;]</span>
         8 tests from 2 test cases ran. (6553 ms total)
     </p>
-</section>
+</div>
 
 <h2>Problems</h2>
 <p>
@@ -299,7 +296,7 @@ Although <a href="http://valgrind.org/">valgrind</a> detects possible data race 
     <li><p>Command line arguments for the program called</p></li>
 </ul>
 <p>Usage:</p>
-<section class="codeCell">
+<div class="codeCell">
     <p>
         <em>
             <span class="pcName">
@@ -311,4 +308,4 @@ Although <a href="http://valgrind.org/">valgrind</a> detects possible data race 
         </em>
         $ python3 testErrors.py Debug tests 10 10
     </p>
-</section>
+</div>
