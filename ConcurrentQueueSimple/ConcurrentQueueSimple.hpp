@@ -12,7 +12,6 @@ public:
     std::string description() const override { return "ConcurrentDequeSimple"; }
 
     std::recursive_mutex& getPopMutex() override { return mux_; }
-    std::condition_variable_any& getCondVar() override { return condVar_; }
 
     void lock() const override { mux_.lock(); }
     void unlock() const override { mux_.unlock(); }
@@ -21,19 +20,16 @@ public:
     void push(const T &val) override {
         std::lock_guard<std::recursive_mutex> lck(mux_);
         q_.push(val);
-        condVar_.notify_one();
     }
 
     T pop() override {
         std::unique_lock<std::recursive_mutex> lck(mux_);
 
         while(empty())
-            condVar_.wait(lck);
+            continue;
 
         T res = q_.front();
         q_.pop();
-
-        condVar_.notify_one();
 
         return res;
     }
@@ -47,8 +43,6 @@ public:
             *target = q_.front();
         
         q_.pop();
-
-        condVar_.notify_one();
 
         return true;
     }
@@ -65,7 +59,6 @@ public:
     virtual ~ConcurrentQueueSimple() = default;
 private:
     mutable std::recursive_mutex mux_{};
-    std::condition_variable_any condVar_;
     std::queue<T> q_{};
 };
 

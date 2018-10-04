@@ -5,6 +5,8 @@
 #include <functional>
 #include <algorithm>
 #include <chrono>
+#include <string>
+#include <stdexcept>
 
 #include <gtest/gtest.h>
 
@@ -15,7 +17,7 @@
 typedef int T;
 
 namespace{
-    constexpr size_t kIncreaseToThousandN = 100;
+    size_t kIncreaseToThousandN{0};
 
     std::vector<T> increaseToThousandInit(){
         static constexpr size_t kMaxInitial = 10;
@@ -27,8 +29,6 @@ namespace{
         
         return res;
     }
-
-    const std::vector<T> increaseToThousandInitial = increaseToThousandInit();
 
     void increaseToThousandWorker(
         ConcurrentQueueBase<T> &from,
@@ -48,7 +48,7 @@ namespace{
 
 namespace{
     constexpr T kAddNumbersDeathPill = -1;
-    constexpr size_t kAddNumbersN = 10000;
+    size_t kAddNumbersN{0};
 
     std::vector<T> addNumbersInit(){
         static constexpr size_t kMaxInitial = 10;
@@ -61,7 +61,7 @@ namespace{
         return res;
     }
 
-    const std::vector<T> addNumbersInitial = addNumbersInit();
+    std::vector<T> addNumbersInitial{};
 
     T addNumbersComputeSumm(){
         T res = 0;
@@ -72,7 +72,7 @@ namespace{
         return res;
     }
 
-    T addNumbersSumm = addNumbersComputeSumm();
+    T addNumbersSumm{0};
 
     void addNumbersProducer(
         size_t producersNum,
@@ -88,9 +88,13 @@ namespace{
         T first = 0, second = 0, third = 0;
 
         std::unique_lock<std::recursive_mutex> lck(target.getPopMutex());
+        lck.unlock();
         while(true){
+            lck.lock();
+
             if(!target.tryPop(&first)){
                 // rule 1
+                lck.unlock();
                 continue;
             }
 
@@ -103,7 +107,6 @@ namespace{
                 
                 // rule 3
                 target.push(first);
-                lck.lock();
                 continue;
             }
 
@@ -123,7 +126,6 @@ namespace{
 
                 // rule 5
                 target.push(first + second);
-                lck.lock();
                 continue;
             }
 
@@ -138,14 +140,12 @@ namespace{
             // rule 6
             if(third != kAddNumbersDeathPill){
                 target.push(first + second + third);
-                lck.lock();
                 continue;
             }
 
             // rule 7
             target.push(first + second);
             target.push(third);
-            lck.lock();
             continue;
         }
     }
@@ -231,7 +231,7 @@ TYPED_TEST_P(ConcurrentQueueTest, IncreaseToThousand){
 
     TypeParam qInitial, qTarget;
 
-    for(T it: increaseToThousandInitial)
+    for(T it: increaseToThousandInit())
         qInitial.push(it);
     
     ASSERT_EQ(qInitial.size(), kIncreaseToThousandN);
@@ -269,6 +269,9 @@ TYPED_TEST_P(ConcurrentQueueTest, AddNumbers){
     //  6) 3 numbers => same as in 5)
     //  7) 2 Numbers and death pill => add numbers, push sum back, push death pill back
     // We will be using half of available threads as producers and other half as consumers
+
+    addNumbersInitial = addNumbersInit();
+    addNumbersSumm = addNumbersComputeSumm();
 
     size_t
         producersNum = std::max(
@@ -335,10 +338,39 @@ REGISTER_TYPED_TEST_CASE_P(
     AddNumbers
 );
 
-typedef ::testing::Types<ConcurrentQueueExtended<T>> ConcurrentQueueTypes;
+typedef ::testing::Types<ConcurrentQueueSimple<T>, ConcurrentQueueExtended<T>> ConcurrentQueueTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(ConcurrentQueueInstantiation, ConcurrentQueueTest, ConcurrentQueueTypes);
 
 int main(int argc, char **argv){
+    {
+        size_t defaultN = 100;
+
+        std::stringstream ss{""};
+        switch(argc){
+            case 0: case 1:
+                kIncreaseToThousandN = defaultN;
+                kAddNumbersN = defaultN;
+                break;
+            case 3:
+                ss.str(*(++argv));
+                if(!(ss>>kIncreaseToThousandN))
+                    throw std::runtime_error("Invalid argument");
+                ss.clear();
+                ss.str(*(++argv));
+                if(!(ss>>kAddNumbersN))
+                    throw std::runtime_error("Invalid argument");
+                --argv; --argv;
+                break;
+            default:
+                throw std::runtime_error("Invalid number of arguments");
+                break;
+        }
+    }
+
+    std::cout << "Testing:" << std::endl;
+    std::cout << "\tIncrease to thousand: " << kIncreaseToThousandN << std::endl;
+    std::cout << "\tAdd numbers: " << kAddNumbersN << std::endl;
+
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

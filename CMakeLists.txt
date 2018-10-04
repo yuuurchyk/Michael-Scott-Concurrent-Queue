@@ -10,10 +10,6 @@ find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-set(FILESLST
-    tests.cpp
-)
-
 set(DIRSLST
     ConcurrentQueueBase
     ConcurrentQueueSimple
@@ -22,5 +18,8 @@ set(DIRSLST
 
 include_directories(${DIRSLST})
 
-add_executable(tests ${FILESLST})
+add_executable(tests tests.cpp)
 target_link_libraries(tests ${CMAKE_THREAD_LIBS_INIT} ${GTEST_LIBRARIES} pthread)
+
+add_executable(stringTests stringTests.cpp)
+target_link_libraries(stringTests ${CMAKE_THREAD_LIBS_INIT} ${GTEST_LIBRARIES} pthread)

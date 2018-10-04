@@ -12,7 +12,6 @@ public:
     virtual std::string description() const = 0;
 
     virtual std::recursive_mutex& getPopMutex() = 0;
-    virtual std::condition_variable_any& getCondVar() = 0;
 
     virtual void lock() const = 0;
     virtual void unlock() const = 0;

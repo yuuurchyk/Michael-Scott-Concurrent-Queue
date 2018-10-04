@@ -22,7 +22,6 @@ public:
     std::string description() const override { return "ConcurrentQueueExtended"; }
 
     std::recursive_mutex& getPopMutex() override{ return head; }
-    std::condition_variable_any& getCondVar() override{ return condVar; }
 
     void lock() const override{ std::lock(head, tail); }
     void unlock() const override {
@@ -49,7 +48,6 @@ public:
             ++rB->rI;
         }
         ++size_;
-        condVar.notify_one();
     }
 
     bool tryPop(T *target=nullptr) override{
@@ -63,7 +61,6 @@ public:
             if(target != nullptr)
                 *target = *lB->data;
             --size_;
-            condVar.notify_one();
             return true;
         }
         else{
@@ -74,7 +71,6 @@ public:
                 *target = *(lB->data + lB->lI + 1);
             ++lB->lI;
             --size_;
-            condVar.notify_one();
             return true;
         }
         return false;
@@ -85,11 +81,9 @@ public:
 
         std::unique_lock<std::recursive_mutex> lck(head);
 
-        while(true){
+        while(true)
             if(tryPop(&res))
                 return res;
-            condVar.wait(lck);
-        }
     }
 
     virtual ~ConcurrentQueueExtended(){
@@ -127,7 +121,6 @@ private:
     std::atomic<size_t> size_{0};
 
     mutable std::recursive_mutex head{}, tail{};
-    std::condition_variable_any condVar{};
     
     Block *lB{nullptr}, *rB{nullptr};
 };
