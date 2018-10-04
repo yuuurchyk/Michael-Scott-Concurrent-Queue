@@ -1,39 +1,5 @@
 # cpp_CourseProject
 
-<style>
-    ul{
-        color: #ba184b;
-    }
-    p{
-        color: black;
-    }
-    ul p, .sample p{
-        margin: 0;
-    }
-    em{
-        color: #ba184b;
-        font-weight: 700;
-    }
-    ol li{
-        padding-left: 15px;
-    }
-    #interface, #implementations, a, .path{
-        color: #2980b9;
-    }
-    .codeCell{
-        background-color: #F6F8FA;
-        padding: 20px;
-        border-radius: 3px;
-        margin-left: 20px;
-    }
-    .codeCell p{
-        margin: 0;
-    }
-    .success, .pcName{
-        color: #27ae60;
-    }
-</style>
-
 <h2>What is this?</h2>
 <p>
     During this project I implemented a concurrent queue, which can be simultaneously accessed from both sides. I.e you can do <em>push</em> and <em>pop at the same time</em> and there are not lock with the same mutex.
@@ -46,7 +12,7 @@
 
 <h2>Interface and implementations</h2>
 <p>Interface consist of several methods:</p>
-<ul style="list-style-type: none; color: #2980b9;">
+<ul>
     <li>getPopMutex</li>
     <li>lock</li>
     <li>unlock</li>
@@ -57,7 +23,7 @@
     <li>size</li>
 </ul>
 <p>And implementations:</p>
-<ul id="implementations" style="list-style-type: none;">
+<ul>
     <li>ConcurrentQueueSimple&lt;T&gt; (push and pop share the same mutex)</li>
     <li>ConcurrentQueueExtended&lt;T&gt; (What this project is all about)</li>
 </ul>
@@ -164,127 +130,39 @@ We'll try to pop 3 elements from the queue.</p>
 </ul>
 
 <h2>Examples run</h2>
-<div class="codeCell">
-    <p>
-        <em>
-            <span class="pcName">
-                george@george-PC:
-            </span>
-            <span class="path">
-                ~/Documents/cpp/cpp_CourseProject/Release
-            </span>
-        </em>
-        $ ./stringTests 100000
-    </p>
-    <p>
-    Testing:
-    </p>
-    <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;Samples num: 100000
-    </p>
-    <p>
-        <span class="success">[==========]</span>
-        Running 8 tests from 2 test cases.
-    </p>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        Global test environment set-up.
-    </p>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0, where TypeParam = ConcurrentQueueSimple&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init (0 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationSequential
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationSequential (530 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMultiThreadProducer
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMultiThreadProducer (431 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMPMC
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMPMC (3430 ms)
-    </p>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0 (4391 ms total)
-    </p>
-    <br/>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/1, where TypeParam = ConcurrentQueueExtended&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.Init
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.Init (4 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationSequential
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationSequential (471 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMultiThreadProducer
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMultiThreadProducer (439 ms)
-    </p>
-    <p>
-        <span class="success">[&nbsp;RUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMPMC
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMPMC (1247 ms)
-    </p>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/1 (2161 ms total)
-    </p>
-    <br/>
-    <p>
-        <span class="success">[ - - - - - - - - - - ]</span>
-        Global test environment tear-down
-    </p>
-    <p>
-        <span class="success">[==========]</span>
-        8 tests from 2 test cases ran. (6553 ms total)
-    </p>
-    <p>
-        <span class="success">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PASSED&nbsp;&nbsp;&nbsp;&nbsp;]</span>
-        8 tests from 2 test cases ran. (6553 ms total)
-    </p>
-</div>
+
+```
+george@george-PC:~/Documents/cpp/cpp_CourseProject/Release$ ./stringTests 100000
+Testing:
+        Samples num: 100000
+[==========] Running 8 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0, where TypeParam = ConcurrentQueueSimple<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.Init (0 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationSequential
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationSequential (519 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMultiThreadProducer
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMultiThreadProducer (420 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMPMC
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/0.ConcatenationMPMC (2350 ms)
+[----------] 4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/0 (3292 ms total)
+
+[----------] 4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/1, where TypeParam = ConcurrentQueueExtended<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.Init
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.Init (0 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationSequential
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationSequential (446 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMultiThreadProducer
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMultiThreadProducer (403 ms)
+[ RUN      ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMPMC
+[       OK ] ConcurrentQueueInstantiation/ConcurrentQueueTest/1.ConcatenationMPMC (1183 ms)
+[----------] 4 tests from ConcurrentQueueInstantiation/ConcurrentQueueTest/1 (2035 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 2 test cases ran. (5327 ms total)
+[  PASSED  ] 8 tests.
+```
 
 <h2>Problems</h2>
 <p>
@@ -296,16 +174,7 @@ Although <a href="http://valgrind.org/">valgrind</a> detects possible data race 
     <li><p>Command line arguments for the program called</p></li>
 </ul>
 <p>Usage:</p>
-<div class="codeCell">
-    <p>
-        <em>
-            <span class="pcName">
-                george@george-PC:
-            </span>
-            <span class="path">
-                ~/Documents/cpp/cpp_CourseProject/
-            </span>
-        </em>
-        $ python3 testErrors.py Debug tests 10 10
-    </p>
-</div>
+
+```
+    george@george-PC:~/Documents/cpp/cpp_CourseProject/Release$ python3 testErrors.py Debug tests 10 10
+```
