@@ -1,4 +1,5 @@
-# cpp_CourseProject
+# Michael-Scott Concurrent Queue
+
 
 <h2>What is this?</h2>
 <p>
